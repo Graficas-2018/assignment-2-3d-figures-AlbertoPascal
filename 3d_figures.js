@@ -70,7 +70,270 @@ function initGL(canvas)
 }
 
 // TO DO: Create the functions for each of the figures.
+function createOctahedron(gl, translation, rotationAxis){
+    var vertexBuffer;
+    vertexBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+    var angle=60/2
+    var radians = 2*Math.PI * angle/360
+    var upperangle=120
+    var alterrads=2*Math.PI* upperangle/360
+    var verts = [
+        // base1
+        -1,  0.0, -1.0,
+         1,   0.0,-1.0,
+         -1, 0.0,  1,
 
+         // base2
+         1, 0.0, 1.0,
+         1,  0.0,-1.0,
+         -1, 0.0,  1,
+
+         //a levantar la figura: centro en 0,0,-.5
+         // base1
+        -1,  0.0, -1.0,
+         1,   0.0,-1.0,
+         0.0, 1.5,  0.5,
+          // base1
+        -1,  0.0, -1.0,
+         1,   0.0,-1.0,
+         0.0, -1.5,  0.5,
+
+         // base2
+         1.0, 0.0, -1.0,
+         1.0,  0.0, 1.0,
+         -0.0, 1.5, 0.5, 
+
+         // base2
+         1.0, 0.0, -1.0,
+         1.0,  0.0, 1.0,
+         -0.0, -1.5, 0.5,
+         // base1
+        -1,  0.0, 1.0,
+         1,   0.0,1.0,
+         0.0, 1.5,  0.5,
+
+         // base1
+        -1,  0.0, 1.0,
+         1,   0.0,1.0,
+         0.0, -1.5,  0.5,
+         // base1
+        -1,  0.0, 1.0,
+         -1,   0.0,-1.0,
+         0.0, 1.5,  0.5,
+
+        // base1
+        -1,  0.0, 1.0,
+         -1,   0.0,-1.0,
+         0.0, -1.5,  0.5,
+
+       ];
+
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(verts), gl.STATIC_DRAW);
+
+    // Color data
+    var colorBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+    var faceColors = [
+        [0.0, 1.0, 0.0], 
+        [0.0, 1.0, 0.0], 
+        [0.0, 0.4, 0.4],
+        [1.0, 0.3, 0.7],
+        [1.0, 1.0, 1.0], 
+        [0.2, 0.8 , 0.5], 
+        [0.4, 0.30, 0.1], 
+        [0.3, 0.3, 1.0], 
+        [1.0, 0.4, 0.3], 
+        [0.6, 0.6, 0.6]  
+    ];
+
+    var vertexColors = [];
+    for (const color of faceColors)
+    {
+        for (var j=0; j < 3; j++)
+            vertexColors = vertexColors.concat(color);
+    }
+
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertexColors), gl.STATIC_DRAW);
+
+    // Index data (defines the triangles to be drawn).
+    var OctahedronIndexBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, OctahedronIndexBuffer);
+    var octaIndices = [
+        0, 1, 2,      //Triangulo 1 (base)
+        3, 4, 5,      //Triangulo 2 (base)
+        6, 7, 8,      //Triangulo 3 (base)
+        9, 10, 11,    //Triangulo 4
+        12, 13, 14,   //Triangulo 5
+        15, 16, 17,   //Triangulo 6
+        18, 19, 20,   //Triangulo 7
+        21, 22, 23,    //Triangulo 8
+        24, 25, 26,
+        27, 28, 29
+    ];
+
+    // gl.ELEMENT_ARRAY_BUFFER: Buffer used for element indices.
+    // Uint16Array: Array of 16-bit unsigned integers.
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(octaIndices), gl.STATIC_DRAW);
+
+    var Octahedron = {
+            buffer:vertexBuffer, colorBuffer:colorBuffer, indices:OctahedronIndexBuffer,
+            vertSize:3, nVerts:30, colorSize:3, nColors: 30, nIndices:30,
+            primtype:gl.TRIANGLES, modelViewMatrix: mat4.create(), currentTime : Date.now()};
+
+    mat4.translate(Octahedron.modelViewMatrix, Octahedron.modelViewMatrix, translation);
+
+    Octahedron.update = function()
+    {
+         var now = Date.now();
+        var deltat = now - this.currentTime;
+        this.currentTime = now;
+        var fract = deltat / duration;
+        var angle = Math.PI * 2 * fract;
+    
+        // Rotates a mat4 by the given angle
+        // mat4 out the receiving matrix
+        // mat4 a the matrix to rotate
+        // Number rad the angle to rotate the matrix by
+        // vec3 axis the axis to rotate around
+        mat4.rotate(this.modelViewMatrix, this.modelViewMatrix, angle, rotationAxis);
+        
+    };
+
+return Octahedron;
+
+
+}
+function createPyramid(gl, translation, rotationAxis){
+    // Vertex Data
+    var vertexBuffer;
+    vertexBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+    var angle=72/2
+    var radians = 2*Math.PI * angle/360
+    var upperangle=108
+    var alterrads=2*Math.PI* upperangle/360
+    var verts = [
+        // base1
+        -0.5,  0.0, -1.0,
+         0.5,  0.0, -1.0,
+         0.0,  0.0, -(0.5*Math.tan(radians)), 
+
+         // base2
+         0.5 + (Math.sqrt(1-Math.pow(Math.sin(alterrads),2))), 0.0, -1 + (Math.sin(alterrads)),
+         0.5, 0.0, -1.0,
+         0.0, 0.0, -(0.5*Math.tan(radians)),
+         // base3
+         0.5 + (Math.sqrt(1-Math.pow(Math.sin(alterrads),2))),  0.0, -1 + (Math.sin(alterrads)),
+         0.0, 0.0, 0.5,
+         0.0, 0.0, -(0.5*Math.tan(radians)),
+         // base4
+         0.0, 0.0,  0.5,
+         0.0, 0.0, -(0.5*Math.tan(radians)),
+         -0.5 - (Math.sqrt(1-Math.pow(Math.sin(alterrads),2))), 0.0, -1 + (Math.sin(alterrads)),
+         // base5
+        -0.5 - (Math.sqrt(1-Math.pow(Math.sin(alterrads),2))), 0.0, -1 + (Math.sin(alterrads)),
+         -0.5, 0.0, -1.0,
+         0.0, 0.0,  -(0.5*Math.tan(radians)),
+
+         //ahora va la elevación. 
+        // cara1 = base1 + altura
+        -0.5,  0.0, -1.0,
+         0.5,  0.0, -1.0,
+         0.0,  3.0, -(0.5*Math.tan(radians)),
+         // cara2
+         0.5 + (Math.sqrt(1-Math.pow(Math.sin(alterrads),2))), 0.0, -1 + (Math.sin(alterrads)),
+         0.5, 0.0, -1.0,
+         0.0, 3.0, -(0.5*Math.tan(radians)),
+         // base3
+         0.5 + (Math.sqrt(1-Math.pow(Math.sin(alterrads),2))),  0.0, -1 + (Math.sin(alterrads)),
+         0.0, 0.0, 0.5,
+         0.0, 3.0, -(0.5*Math.tan(radians)),
+         // base4
+         0.0, 0.0,  0.5,
+         0.0, 3.0, -(0.5*Math.tan(radians)),
+         -0.5 - (Math.sqrt(1-Math.pow(Math.sin(alterrads),2))), 0.0, -1 + (Math.sin(alterrads)),
+         // base5
+        -0.5 - (Math.sqrt(1-Math.pow(Math.sin(alterrads),2))), 0.0, -1 + (Math.sin(alterrads)),
+         -0.5, 0.0, -1.0,
+         0.0, 3.0,  -(0.5*Math.tan(radians)),
+
+       ];
+
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(verts), gl.STATIC_DRAW);
+
+    // Color data
+    var colorBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+    var faceColors = [
+        [0.0, 1.0, 0.0], //
+        [0.0, 1.0, 0.0], 
+        [0.0, 1.0, 0.0],
+        [0.0, 1.0, 0.0],
+        [0.0, 1.0, 0.0], 
+        [0.5, 1.0, 0.5], // Triangulo 4
+        [0.7, 0.0, 1.0], // Triangulo 5
+        [0.3, 0.3, 1.0], // Triangulo 6
+        [1.0, 0.4, 0.3], // Triangulo 7
+        [0.2, 0.2, 0.2]  // Triangulo 8
+    ];
+
+    var vertexColors = [];
+    for (const color of faceColors)
+    {
+        for (var j=0; j < 3; j++)
+            vertexColors = vertexColors.concat(color);
+    }
+
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertexColors), gl.STATIC_DRAW);
+
+    // Index data (defines the triangles to be drawn).
+    var pyramidIndexBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, pyramidIndexBuffer);
+    var pyramidIndices = [
+        0, 1, 2,      //Triangulo 1 (base)
+        3, 4, 5,      //Triangulo 2 (base)
+        6, 7, 8,      //Triangulo 3 (base)
+        9, 10, 11,    //Triangulo 4
+        12, 13, 14,   //Triangulo 5
+        15, 16, 17,   //Triangulo 6
+        18, 19, 20,   //Triangulo 7
+        21, 22, 23,    //Triangulo 8
+        24, 25, 26,
+        27, 28, 29
+    ];
+
+    // gl.ELEMENT_ARRAY_BUFFER: Buffer used for element indices.
+    // Uint16Array: Array of 16-bit unsigned integers.
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(pyramidIndices), gl.STATIC_DRAW);
+
+    var pyramid = {
+            buffer:vertexBuffer, colorBuffer:colorBuffer, indices:pyramidIndexBuffer,
+            vertSize:3, nVerts:30, colorSize:3, nColors: 30, nIndices:30,
+            primtype:gl.TRIANGLES, modelViewMatrix: mat4.create(), currentTime : Date.now()};
+
+    mat4.translate(pyramid.modelViewMatrix, pyramid.modelViewMatrix, translation);
+
+    pyramid.update = function()
+    {
+         var now = Date.now();
+        var deltat = now - this.currentTime;
+        this.currentTime = now;
+        var fract = deltat / duration;
+        var angle = Math.PI * 2 * fract;
+    
+        // Rotates a mat4 by the given angle
+        // mat4 out the receiving matrix
+        // mat4 a the matrix to rotate
+        // Number rad the angle to rotate the matrix by
+        // vec3 axis the axis to rotate around
+        mat4.rotate(this.modelViewMatrix, this.modelViewMatrix, angle, rotationAxis);
+        
+    };
+
+return pyramid;
+
+}
 function createShader(gl, str, type)
 {
     var shader;

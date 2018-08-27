@@ -18,7 +18,9 @@
 		        initGL(canvas);
 				initShader(gl);
 				// TO DO: create and draw the figures
-				run(gl, []);
+				var pyramid = createPyramid(gl, [-6, 0, -10], [0.5,1,0]);
+				var Octahedron = createOctahedron(gl, [0, 0, -10], [0.5,1,0]);
+				run(gl, [pyramid, Octahedron]);
 			}
 	);
 
@@ -27,7 +29,7 @@
 </head>
 <body>
 
-    <canvas id="webglcanvas" style="border: none;" width="500" height="500"></canvas>
+    <canvas id="webglcanvas" style="border: none;" width="1000" height="500"></canvas>
 
 </body>
 </html>
