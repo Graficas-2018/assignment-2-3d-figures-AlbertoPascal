@@ -189,25 +189,29 @@ function createOctahedron(gl, translation, rotationAxis){
     Octahedron.update = function()
     {
          var now = Date.now();
+        console.log(this.modelViewMatrix[13]);
         var deltat = now - this.currentTime;
         this.currentTime = now;
         var fract = deltat / duration;
         var angle = Math.PI * 2 * fract;
         if(!limit_down){
-            moveY = moveY -0.01;
+            newTranslation= [0,-0.15,0];
+            moveY=moveY - 0.01;
+
         }
-        if(moveY<-0.20){
+        if(this.modelViewMatrix[13]<-1.5){
             limit_down=true;
             limit_up=false;
         }
         if(!limit_up){
-            moveY=moveY+0.01;
+            newTranslation= [0,0.15,0];
+            moveY = moveY+0.01;
+
         }
-        if(moveY>0.20){
+        if(this.modelViewMatrix[13]>2.75){
             limit_up=true;
             limit_down=false;
         }
-        newTranslation= [0,moveY,0];
 
         // Rotates a mat4 by the given angle
         // mat4 out the receiving matrix
