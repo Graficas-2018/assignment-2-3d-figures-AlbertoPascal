@@ -334,6 +334,199 @@ function createPyramid(gl, translation, rotationAxis){
 return pyramid;
 
 }
+function createScutoid(gl, translation, rotationAxis){
+    var vertexBuffer;
+    vertexBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+    var angle=72/2
+    var angle2=60/2
+    var radians = 2*Math.PI * angle/360
+    var radians2 = 2*Math.PI * angle2/360
+    var upperangle=108
+    var upperangle2=120
+    var alterrads=2*Math.PI* upperangle/360
+    var alterrads2=2*Math.PI* upperangle2/360
+    var verts = [
+    //first part is the same as the pyramid's. I need the pentagon base.
+        
+
+         //Now I need an hexagon base.  
+        -0.5, 3, -1.0,
+         0.5, 3, -1.0,
+         0.0,   3,-(0.5*Math.tan(radians2)),
+
+
+         0.0,   3,-(0.5*Math.tan(radians2)),
+         -0.5, 3, 1-2*(0.5*Math.tan(radians2)) ,
+         0.5, 3,  1-2*(0.5*Math.tan(radians2)) ,
+         
+
+         0.5 + Math.abs(Math.cos(alterrads2)), 3, -(0.5*Math.tan(radians2)),
+         0.5, 3, 1-2*(0.5*Math.tan(radians2)) ,
+         0.0,  3, -(0.5*Math.tan(radians2)),
+
+         -0.5 - Math.abs(Math.cos(alterrads2)), 3, -(0.5*Math.tan(radians2)),
+         -0.5, 3, 1-2*(0.5*Math.tan(radians2)) ,
+         0.0, 3, -(0.5*Math.tan(radians2)), 
+
+
+         -0.5 -Math.abs(Math.cos(alterrads2)), 3,  -(0.5*Math.tan(radians2)),
+         -0.5, 3,  -1 ,
+         0.0,   3, -(0.5*Math.tan(radians2)),
+
+         0.5 +Math.abs(Math.cos(alterrads2)), 3, -(0.5*Math.tan(radians2)),
+         0.5, 3,  -1 ,
+         0.0, 3, -(0.5*Math.tan(radians2)), 
+        //now pentagon's lower base: 
+
+         // base1
+        -0.5,  0.0, -1.0,
+         0.5,  0.0, -1.0,
+         0.0,  0.0, -(0.5*Math.tan(radians)), 
+
+         // base2
+         0.5 + (Math.sqrt(1-Math.pow(Math.sin(alterrads),2))), 0.0, -1 + (Math.sin(alterrads)),
+         0.5, 0.0, -1.0,
+         0.0, 0.0, -(0.5*Math.tan(radians)),
+         // base3
+         0.5 + (Math.sqrt(1-Math.pow(Math.sin(alterrads),2))),  0.0, -1 + (Math.sin(alterrads)),
+         0.0, 0.0, 0.5,
+         0.0, 0.0, -(0.5*Math.tan(radians)),
+         // base4
+         0.0, 0.0,  0.5,
+         0.0, 0.0, -(0.5*Math.tan(radians)),
+         -0.5 - (Math.sqrt(1-Math.pow(Math.sin(alterrads),2))), 0.0, -1 + (Math.sin(alterrads)),
+         // base5
+        -0.5 - (Math.sqrt(1-Math.pow(Math.sin(alterrads),2))), 0.0, -1 + (Math.sin(alterrads)),
+         -0.5, 0.0, -1.0,
+         0.0, 0.0,  -(0.5*Math.tan(radians)),
+
+         //for the faces, starting with the triangle one: 
+         0.0,   1.5,0.5,
+         -0.5, 3, 1-2*(0.5*Math.tan(radians2)) ,
+         0.5, 3,  1-2*(0.5*Math.tan(radians2)) ,
+
+
+         //the others:
+
+         //face1
+         -0.5, 3, -1.0,
+         0.5, 3, -1.0,
+         -0.5,   0.0,-1,
+
+         -0.5, 0, -1.0,
+         0.5, 0, -1.0,
+         0.5,   3,-1,
+
+         //face2
+
+         -0.5 -Math.abs(Math.cos(alterrads2)), 3,  -(0.5*Math.tan(radians2)),
+         -0.5, 3,  -1 ,
+         -0.5 - (Math.sqrt(1-Math.pow(Math.sin(alterrads),2))),   0, -1 + (Math.sin(alterrads)),
+
+         -0.5 - (Math.sqrt(1-Math.pow(Math.sin(alterrads),2))), 0,  -1 + (Math.sin(alterrads)),
+         -0.5, 3,  -1 ,
+         -0.5,   0.0,-1,
+
+
+
+
+
+
+
+       ];
+
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(verts), gl.STATIC_DRAW);
+
+    // Color data
+    var colorBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+    var faceColors = [
+        [0.0, 1.0, 0.0], //
+        [0.0, 1.0, 0.0], 
+        [0.0, 1.0, 0.0],
+        [0.0, 1.0, 0.0],
+        [0.0, 1.0, 0.0], 
+
+        [0.0, 1.0, 0.0],
+        [0.0, 1.0, 0.0],
+        [0.0, 1.0, 0.0],
+        [0.0, 1.0, 0.0],
+        [0.0, 1.0, 0.0],
+        [0.0, 1.0, 0.0],
+
+        [0.0, 1.0, 1.0],
+
+        [1.0, 1.0, 1.0],
+        [1.0, 1.0, 1.0],
+
+        [1.0, 0.0, 1.0],
+        [1.0, 0.0, 1.0],
+
+      
+    ];
+
+    var vertexColors = [];
+    for (const color of faceColors)
+    {
+        for (var j=0; j < 3; j++)
+            vertexColors = vertexColors.concat(color);
+    }
+
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertexColors), gl.STATIC_DRAW);
+
+    // Index data (defines the triangles to be drawn).
+    var scutoidIndexBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, scutoidIndexBuffer);
+    var pyramidIndices = [
+        0, 1, 2,      //Triangulo 1 (base)
+        3, 4, 5,      //Triangulo 2 (base)
+        6, 7, 8,      //Triangulo 3 (base)
+        9, 10, 11,    //Triangulo 4
+        12, 13, 14,   //Triangulo 5
+        15, 16, 17,   //Triangulo 6
+        18, 19, 20,   //Triangulo 7
+        21, 22, 23,    //Triangulo 8
+        24, 25, 26,
+        27, 28, 29, 
+        30, 31 , 32, 
+        33, 34, 35, 
+        36, 37, 38, 
+        39, 40, 41,
+        42, 43, 44, 
+        45, 46, 47
+    ];
+
+    // gl.ELEMENT_ARRAY_BUFFER: Buffer used for element indices.
+    // Uint16Array: Array of 16-bit unsigned integers.
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(pyramidIndices), gl.STATIC_DRAW);
+
+    var scutoid = {
+            buffer:vertexBuffer, colorBuffer:colorBuffer, indices:scutoidIndexBuffer,
+            vertSize:3, nVerts:48, colorSize:3, nColors: 48, nIndices:48,
+            primtype:gl.TRIANGLES, modelViewMatrix: mat4.create(), currentTime : Date.now()};
+
+    mat4.translate(scutoid.modelViewMatrix, scutoid.modelViewMatrix, translation);
+
+    scutoid.update = function()
+    {
+         var now = Date.now();
+        var deltat = now - this.currentTime;
+        this.currentTime = now;
+        var fract = deltat / duration;
+        var angle = Math.PI * 2 * fract;
+    
+        // Rotates a mat4 by the given angle
+        // mat4 out the receiving matrix
+        // mat4 a the matrix to rotate
+        // Number rad the angle to rotate the matrix by
+        // vec3 axis the axis to rotate around
+        mat4.rotate(this.modelViewMatrix, this.modelViewMatrix, angle, rotationAxis); 
+        
+    };
+
+return scutoid;
+}
 function createShader(gl, str, type)
 {
     var shader;
