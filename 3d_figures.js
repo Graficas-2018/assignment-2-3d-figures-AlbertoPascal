@@ -266,16 +266,16 @@ function createPyramid(gl, translation, rotationAxis){
     var colorBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
     var faceColors = [
-        [0.0, 1.0, 0.0], //
-        [0.0, 1.0, 0.0], 
-        [0.0, 1.0, 0.0],
-        [0.0, 1.0, 0.0],
-        [0.0, 1.0, 0.0], 
-        [0.5, 1.0, 0.5], // Triangulo 4
-        [0.7, 0.0, 1.0], // Triangulo 5
-        [0.3, 0.3, 1.0], // Triangulo 6
-        [1.0, 0.4, 0.3], // Triangulo 7
-        [0.2, 0.2, 0.2]  // Triangulo 8
+        [0.0, 1.0, 0.0], //pentagono
+        [0.0, 1.0, 0.0], //pentagono
+        [0.0, 1.0, 0.0], //pentagono
+        [0.0, 1.0, 0.0], //pentagono
+        [0.0, 1.0, 0.0], //pentagono
+        [1, 1.0, 0.5], // 
+        [0.7, 0.0, 1.0], // 
+        [0.3, 0.3, 1.0], // 
+        [1.0, 0.4, 0.3], // 
+        [0.2, 0.2, 0.2]  // 
     ];
 
     var vertexColors = [];
@@ -291,14 +291,14 @@ function createPyramid(gl, translation, rotationAxis){
     var pyramidIndexBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, pyramidIndexBuffer);
     var pyramidIndices = [
-        0, 1, 2,      //Triangulo 1 (base)
-        3, 4, 5,      //Triangulo 2 (base)
-        6, 7, 8,      //Triangulo 3 (base)
-        9, 10, 11,    //Triangulo 4
-        12, 13, 14,   //Triangulo 5
-        15, 16, 17,   //Triangulo 6
-        18, 19, 20,   //Triangulo 7
-        21, 22, 23,    //Triangulo 8
+        0, 1, 2,      
+        3, 4, 5,      
+        6, 7, 8,     
+        9, 10, 11,    
+        12, 13, 14,   
+        15, 16, 17,   
+        18, 19, 20,   
+        21, 22, 23,    
         24, 25, 26,
         27, 28, 29
     ];
@@ -481,7 +481,7 @@ function createScutoid(gl, translation, rotationAxis){
         [1.0, 1.0, 0.0], 
         [1.0, 1.0, 0.0],
 
-        
+
         [0.0, 1.0, 0.0],
         [0.0, 1.0, 0.0],
         [0.0, 1.0, 0.0],
