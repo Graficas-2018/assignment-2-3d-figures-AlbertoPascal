@@ -452,16 +452,16 @@ function createScutoid(gl, translation, rotationAxis){
 
          //face 5:
 
-         0.5 +Math.abs(Math.cos(alterrads2)), 3, -(0.5*Math.tan(radians2)),
-         0.5 + (Math.sqrt(1-Math.pow(Math.sin(alterrads),2))), 0.0, -1 + (Math.sin(alterrads)),
+         -0.5 -Math.abs(Math.cos(alterrads2)), 3, -(0.5*Math.tan(radians2)),
+         -0.5, 3, 1-2*(0.5*Math.tan(radians2)) ,
          0.0, 0.0, 0.5,
 
-         0.5 +Math.abs(Math.cos(alterrads2)), 3, -(0.5*Math.tan(radians2)),
-         0.5, 3,  1-2*(0.5*Math.tan(radians2)) ,//-0.5 -Math.abs(Math.cos(alterrads2)), 3, -(0.5*Math.tan(radians2)), primera buena esquina que necesito para el otro
+         -0.5 -Math.abs(Math.cos(alterrads2)), 3, -(0.5*Math.tan(radians2)),
+         -0.5 - (Math.sqrt(1-Math.pow(Math.sin(alterrads),2))), 0,  -1 + (Math.sin(alterrads)),//-0.5 -Math.abs(Math.cos(alterrads2)), 3, -(0.5*Math.tan(radians2)), primera buena esquina que necesito para el otro
          0.0, 0.0, 0.5,
 
          0.0, 0.0, 0.5,
-         0.5, 3,  1-2*(0.5*Math.tan(radians2)) ,
+         -0.5, 3,  1-2*(0.5*Math.tan(radians2)) ,
          0.0,   1.5,0.5,
 
 
@@ -474,13 +474,14 @@ function createScutoid(gl, translation, rotationAxis){
     var colorBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
     var faceColors = [
-        [0.0, 1.0, 0.0], //
-        [0.0, 1.0, 0.0], 
-        [0.0, 1.0, 0.0],
-        [0.0, 1.0, 0.0],
-        [0.0, 1.0, 0.0], 
+        [1.0, 1.0, 0.0], //
+        [1.0, 1.0, 0.0], 
+        [1.0, 1.0, 0.0],
+        [1.0, 1.0, 0.0],
+        [1.0, 1.0, 0.0], 
+        [1.0, 1.0, 0.0],
 
-        [0.0, 1.0, 0.0],
+        
         [0.0, 1.0, 0.0],
         [0.0, 1.0, 0.0],
         [0.0, 1.0, 0.0],
