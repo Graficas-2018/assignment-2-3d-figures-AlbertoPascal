@@ -428,9 +428,41 @@ function createScutoid(gl, translation, rotationAxis){
          -0.5, 3,  -1 ,
          -0.5,   0.0,-1,
 
+         //face 3:
+         0.5,   3,-1,
+         0.5, 0, -1.0,
+         0.5 + (Math.sqrt(1-Math.pow(Math.sin(alterrads),2))), 0.0, -1 + (Math.sin(alterrads)),
 
+         0.5 + (Math.sqrt(1-Math.pow(Math.sin(alterrads),2))), 0.0, -1 + (Math.sin(alterrads)), 
+          0.5,   3,-1,
+         0.5 +Math.abs(Math.cos(alterrads2)), 3, -(0.5*Math.tan(radians2)),
 
+         //face4: 
+         0.5 +Math.abs(Math.cos(alterrads2)), 3, -(0.5*Math.tan(radians2)),
+         0.5 + (Math.sqrt(1-Math.pow(Math.sin(alterrads),2))), 0.0, -1 + (Math.sin(alterrads)),
+         0.0, 0.0, 0.5,
 
+         0.5 +Math.abs(Math.cos(alterrads2)), 3, -(0.5*Math.tan(radians2)),
+         0.5, 3,  1-2*(0.5*Math.tan(radians2)) ,//-0.5 -Math.abs(Math.cos(alterrads2)), 3, -(0.5*Math.tan(radians2)), primera buena esquina que necesito para el otro
+         0.0, 0.0, 0.5,
+
+         0.0, 0.0, 0.5,
+         0.5, 3,  1-2*(0.5*Math.tan(radians2)) ,
+         0.0,   1.5,0.5,
+
+         //face 5:
+
+         0.5 +Math.abs(Math.cos(alterrads2)), 3, -(0.5*Math.tan(radians2)),
+         0.5 + (Math.sqrt(1-Math.pow(Math.sin(alterrads),2))), 0.0, -1 + (Math.sin(alterrads)),
+         0.0, 0.0, 0.5,
+
+         0.5 +Math.abs(Math.cos(alterrads2)), 3, -(0.5*Math.tan(radians2)),
+         0.5, 3,  1-2*(0.5*Math.tan(radians2)) ,//-0.5 -Math.abs(Math.cos(alterrads2)), 3, -(0.5*Math.tan(radians2)), primera buena esquina que necesito para el otro
+         0.0, 0.0, 0.5,
+
+         0.0, 0.0, 0.5,
+         0.5, 3,  1-2*(0.5*Math.tan(radians2)) ,
+         0.0,   1.5,0.5,
 
 
 
@@ -463,6 +495,17 @@ function createScutoid(gl, translation, rotationAxis){
         [1.0, 0.0, 1.0],
         [1.0, 0.0, 1.0],
 
+        [0.3, 0.2, 1.0],
+        [0.3, 0.2, 1.0],
+
+        [0.5, 0.1, 0.3],
+        [0.5, 0.1, 0.3],
+        [0.5, 0.1, 0.3],
+
+        [0.9, 0.5, 0.2],
+        [0.9, 0.5, 0.2],
+        [0.9, 0.5, 0.2],
+
       
     ];
 
@@ -494,7 +537,15 @@ function createScutoid(gl, translation, rotationAxis){
         36, 37, 38, 
         39, 40, 41,
         42, 43, 44, 
-        45, 46, 47
+        45, 46, 47, 
+        48, 49, 50, 
+        51, 52, 53, 
+        54, 55, 56, 
+        57, 58, 59,
+        60, 61, 62,
+        63, 64, 65, 
+        66, 67, 68, 
+        69, 70, 71
     ];
 
     // gl.ELEMENT_ARRAY_BUFFER: Buffer used for element indices.
@@ -503,7 +554,7 @@ function createScutoid(gl, translation, rotationAxis){
 
     var scutoid = {
             buffer:vertexBuffer, colorBuffer:colorBuffer, indices:scutoidIndexBuffer,
-            vertSize:3, nVerts:48, colorSize:3, nColors: 48, nIndices:48,
+            vertSize:3, nVerts:72, colorSize:3, nColors: 72, nIndices:72,
             primtype:gl.TRIANGLES, modelViewMatrix: mat4.create(), currentTime : Date.now()};
 
     mat4.translate(scutoid.modelViewMatrix, scutoid.modelViewMatrix, translation);
